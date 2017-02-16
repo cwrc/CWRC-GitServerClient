@@ -1,0 +1,53 @@
+{
+  "name": "cwrc-git-server-client",
+  "version": "0.0.0-development",
+  "description": "Client for calls to the CWRC-GitServer from CWRC-GitDelegator in CWRC-GitWriter.",
+  "main": "src/index.js",
+  "scripts": {
+    "commit": "git-cz",
+    "check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
+    "test": "mocha spec -w",
+    "test:single": "istanbul cover -x *.test.js _mocha -- -R spec spec",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jchartrand/CWRC-GitServerClient.git"
+  },
+  "keywords": [
+    "xml",
+    "rdf",
+    "editor",
+    "github"
+  ],
+  "author": "“James <“jc.chartrand@gmail.com”> (http://openskysolutions.ca)",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/jchartrand/CWRC-GitServerClient/issues"
+  },
+  "homepage": "https://github.com/jchartrand/CWRC-GitServerClient#readme",
+  "devDependencies": {
+    "chai": "3.5.0",
+    "codecov.io": "0.1.6",
+    "commitizen": "2.9.5",
+    "cz-conventional-changelog": "1.2.0",
+    "ghooks": "2.0.0",
+    "istanbul": "0.4.5",
+    "mocha": "3.2.0",
+    "nock": "9.0.2",
+    "semantic-release": "^6.3.2"
+  },
+  "czConfig": {
+    "path": "node_modules/cz-conventional-changelog"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run test:single && npm run check-coverage"
+    }
+  },
+  "dependencies": {
+    "jquery": "3.1.1",
+    "js-cookie": "2.1.3"
+  }
+}
