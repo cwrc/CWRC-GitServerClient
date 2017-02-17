@@ -50,11 +50,16 @@ The spec directory contains specifications (tests) that can help better understa
 The methods exposed (API) by this package are:
 
 ```
-	createCWRCRepo
-	getReposForGithubUser
-    getReposForAuthenticatedGithubUser
-    saveDoc
-    getDoc
-    getInfoForAuthenticatedUser
+	createCWRCRepo(repoName, description, isPrivate, theDoc, annotations, versionTimestamp)
+
+	getReposForGithubUser(githubName)
+
+    getReposForAuthenticatedGithubUser()
+
+    saveDoc(repo, owner, parentCommitSHA, baseTreeSHA, docText, versionTimestamp)
+
+    getDoc(repoName)
+
+    getInfoForAuthenticatedUser()
 
 ```
