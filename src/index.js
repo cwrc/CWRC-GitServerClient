@@ -92,6 +92,26 @@ function saveDoc(repo, owner, parentCommitSHA, baseTreeSHA, docText, versionTime
     return callCWRCGitWithToken(ajaxConfig);
 }
 
+function getTemplates() {
+    var ajaxConfig = {
+        type: 'GET',
+        dataType: 'json',
+        url: `/github/templates`
+    };
+    return callCWRCGitWithToken(ajaxConfig);
+}
+
+function getTemplate(templatePath) {
+    var ajaxConfig = {
+        type: 'GET',
+        dataType: 'json',
+        url: `/github/templates/${templatePath}`
+    };
+    return callCWRCGitWithToken(ajaxConfig);
+}
+
+
+
 
 module.exports = {
 	createCWRCRepo: createCWRCRepo,
@@ -99,7 +119,9 @@ module.exports = {
     getReposForAuthenticatedGithubUser: getReposForAuthenticatedGithubUser,
     saveDoc: saveDoc,
     getDoc: getDoc,
-    getInfoForAuthenticatedUser: getInfoForAuthenticatedUser
+    getInfoForAuthenticatedUser: getInfoForAuthenticatedUser,
+    getTemplates: getTemplates,
+    getTemplate: getTemplate
 }
    
 

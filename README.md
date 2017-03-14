@@ -10,8 +10,6 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-
-
 1. [Overview](#overview)
 1. [Demo](#demo)
 1. [Installation](#installation)
@@ -20,11 +18,11 @@
 
 ### Overview
 
-Makes http calls to the [CWRC-GitServer](https://github.com/cwrc/CWRC-GitServer), typically invoked from [CWRC-GitDelegator](https://github.com/jchartrand/CWRC-GitDelegoator) running in[CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter). 
+Makes http calls to the [CWRC-GitServer](https://github.com/cwrc/CWRC-GitServer), invoked from [CWRC-GitDelegator](https://github.com/jchartrand/CWRC-GitDelegator) running in [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter). 
 
 ### Demo 
 
-The [CWRC GitHub Sandbox](http://208.75.74.217/editor_github.html) uses the NPM package published from this repository along with the code in [CWRC-Writer](https://github.com/jchartrand/CWRC-Writer), [CWRC-GitServer](https://github.com/jchartrand/CWRC-GitServer), [CWRC-GitWriter](https://github.com/jchartrand/CWRC-GitWriter), and [CWRC-GitDelegator](https://github.com/jchartrand/CWRC-GitServer). The same code is easily (for someone with modest development experience) installed on any server to run your own instance.
+The [CWRC GitHub Sandbox](http://208.75.74.217/editor_github.html) uses the NPM package published from this repository along with the code in [CWRC-Writer](https://github.com/jchartrand/CWRC-Writer), [CWRC-GitServer](https://github.com/jchartrand/CWRC-GitServer), [CWRC-GitWriter](https://github.com/jchartrand/CWRC-GitWriter), and [CWRC-GitDelegator](https://github.com/jchartrand/CWRC-GitDelegator). The same code is easily (for someone with modest development experience) installed on any server to run your own instance.
 
 ### Installation
 
@@ -63,5 +61,9 @@ The methods exposed (API) by this package are:
     getDoc(repoName)
 
     getInfoForAuthenticatedUser()
+
+    getTemplates()
+
+    getTemplate(templatePath)
 
 ```
