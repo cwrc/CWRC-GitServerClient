@@ -101,11 +101,11 @@ function getTemplates() {
     return callCWRCGitWithToken(ajaxConfig);
 }
 
-function getTemplate(templatePath) {
+function getTemplate(templateName) {
     var ajaxConfig = {
         type: 'GET',
-        dataType: 'json',
-        url: `/github/templates/${templatePath}`
+        dataType: 'xml',
+        url: `/github/templates/${templateName}`
     };
     return callCWRCGitWithToken(ajaxConfig);
 }
