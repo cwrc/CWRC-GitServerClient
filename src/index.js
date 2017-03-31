@@ -89,7 +89,7 @@ function saveDoc(repo, owner, parentCommitSHA, baseTreeSHA, docText, versionTime
         data: data,
         url:  `/github/repos/${owner}/${repo}/doc`
     };
-    return callCWRCGitWithToken(ajaxConfig);
+    return callCWRCGitWithToken(ajaxConfig)
 }
 
 function getTemplates() {
@@ -98,7 +98,7 @@ function getTemplates() {
         dataType: 'json',
         url: `/github/templates`
     };
-    return callCWRCGitWithToken(ajaxConfig);
+    return callCWRCGitWithToken(ajaxConfig)
 }
 
 function getTemplate(templateName) {
@@ -107,9 +107,18 @@ function getTemplate(templateName) {
         dataType: 'xml',
         url: `/github/templates/${templateName}`
     };
-    return callCWRCGitWithToken(ajaxConfig);
+    return callCWRCGitWithToken(ajaxConfig)
 }
 
+function search(query) {
+    var ajaxConfig = {
+        type: 'GET',
+        dataType: 'json',
+        url: `/github/search`,
+        data: `q=${query}`
+    };
+    return callCWRCGitWithToken(ajaxConfig)
+}
 
 
 
@@ -121,7 +130,8 @@ module.exports = {
     getDoc: getDoc,
     getInfoForAuthenticatedUser: getInfoForAuthenticatedUser,
     getTemplates: getTemplates,
-    getTemplate: getTemplate
+    getTemplate: getTemplate,
+    search: search
 }
    
 

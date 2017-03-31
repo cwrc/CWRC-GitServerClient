@@ -67,4 +67,6 @@ The methods exposed (API) by this package are:
 
     getTemplate(templatePath)
 
+    search(queryString)
+
 ```
