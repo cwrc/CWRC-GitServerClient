@@ -1,6 +1,6 @@
 'use strict';
-let $ = require('jquery');
-let Cookies = require('js-cookie');
+var $ = require('jquery');
+var Cookies = require('js-cookie');
   
 function callCWRCGitWithToken(ajaxConfig) {
 	var theJWT = Cookies.get('cwrc-token');
