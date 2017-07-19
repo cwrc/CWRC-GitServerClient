@@ -1,9 +1,9 @@
-![Picture](http://www.cwrc.ca/wp-content/uploads/2010/12/CWRC_Dec-2-10_smaller.png)
+![Picture](http://cwrc.ca/logos/CWRC_logos_2016_versions/CWRCLogo-Horz-FullColour.png)
 
 # CWRC-GitServerClient
 
-[![Travis](https://img.shields.io/travis/jchartrand/CWRC-GitServerClient.svg)](https://travis-ci.org/jchartrand/CWRC-GitServerClient)
-[![Codecov](https://img.shields.io/codecov/c/github/jchartrand/CWRC-GitServerClient.svg)](https://codecov.io/gh/jchartrand/CWRC-GitServerClient)
+[![Travis](https://img.shields.io/travis/cwrc/CWRC-GitServerClient.svg)](https://travis-ci.org/cwrc/CWRC-GitServerClient)
+[![Codecov](https://img.shields.io/codecov/c/github/cwrc/CWRC-GitServerClient.svg)](https://codecov.io/gh/cwrc/CWRC-GitServerClient)
 [![version](https://img.shields.io/npm/v/cwrc-git-server-client.svg)](http://npm.im/cwrc-git-server-client)
 [![downloads](https://img.shields.io/npm/dm/cwrc-git-server-client.svg)](http://npm-stat.com/charts.html?package=cwrc-git-server-client&from=2015-08-01)
 [![GPL-2.0](https://img.shields.io/npm/l/cwrc-git-server-client.svg)](http://opensource.org/licenses/GPL-2.0)
@@ -19,11 +19,11 @@
 
 ### Overview
 
-Makes http calls to the [CWRC-GitServer](https://github.com/cwrc/CWRC-GitServer), invoked from [CWRC-GitDelegator](https://github.com/jchartrand/CWRC-GitDelegator) running in [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter). 
+Makes http calls to the [CWRC-GitServer](https://github.com/cwrc/CWRC-GitServer), invoked from [CWRC-GitDelegator](https://github.com/cwrc/CWRC-GitDelegator) running in [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter). 
 
 ### Demo 
 
-The [CWRC GitHub Sandbox](http://208.75.74.217/editor_github.html) uses the NPM package published from this repository along with the code in [CWRC-Writer](https://github.com/jchartrand/CWRC-Writer), [CWRC-GitServer](https://github.com/jchartrand/CWRC-GitServer), [CWRC-GitWriter](https://github.com/jchartrand/CWRC-GitWriter), and [CWRC-GitDelegator](https://github.com/jchartrand/CWRC-GitDelegator). The same code is easily (for someone with modest development experience) installed on any server to run your own instance.
+The [CWRC GitHub Sandbox](http://208.75.74.217/editor_github.html) uses the NPM package published from this repository along with the code in [CWRC-Writer](https://github.com/cwrc/CWRC-Writer), [CWRC-GitServer](https://github.com/cwrc/CWRC-GitServer), [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter), and [CWRC-GitDelegator](https://github.com/cwrc/CWRC-GitDelegator). The same code is easily (for someone with modest development experience) installed on any server to run your own instance.
 
 ### Installation
 
@@ -44,7 +44,7 @@ One example:
 var cwrcGitServerClient = require('cwrc-git-server-client');
 var repos = cwrcGitServerClient.getReposForAuthenticatedGithubUser();
 
-The spec directory contains specifications (tests) that can help better understand the API. Also see [CWRC-GitDelegator](https://github.com/jchartrand/CWRC-GitDelegoator) which fully uses the API.
+The spec directory contains specifications (tests) that can help better understand the API. Also see [CWRC-GitDelegator](https://github.com/cwrc/CWRC-GitDelegoator) which fully uses the API.
 
 ### API
 
