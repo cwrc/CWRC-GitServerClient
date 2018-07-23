@@ -3,27 +3,18 @@ var $ = require('jquery');
 var Cookies = require('js-cookie');
   
 function callCWRCGitWithToken(ajaxConfig) {
-	var theJWT = Cookies.get('cwrc-token');
+	const theJWT = Cookies.get('cwrc-token');
     if (theJWT) {
     	ajaxConfig.headers = {'cwrc-token':theJWT};
     }
     return $.ajax(ajaxConfig);
 }
  
-function createCWRCRepo(repoName, description, isPrivate, theDoc, annotations, versionTimestamp) {
-	var data = {
-        repo: repoName, 
-        isPrivate: isPrivate, 
-        description: description, 
-        doc: theDoc, 
-        annotations: annotations, 
-        versionTimestamp: versionTimestamp
-    };
-	//console.log(data);
-	var ajaxConfig = {
+function createRepo(repo, description, isPrivate) {
+	const ajaxConfig = {
         type: 'POST',
         dataType: 'json',
-        data: data,
+        data: {repo, isPrivate, description },
         url:  '/github/user/repos'
     };
   	return callCWRCGitWithToken(ajaxConfig);
@@ -34,31 +25,62 @@ function getReposForGithubUser(githubName) {
 	var ajaxConfig = {
         type: 'GET',
         dataType: 'json',
-        url:  url
+        url:  url,
+		data: {page, per_page}
     };
     return callCWRCGitWithToken(ajaxConfig);
 }
 
-function getReposForAuthenticatedGithubUser() {
+function getReposForAuthenticatedGithubUser(page, per_page) {
     if (Cookies.get('cwrc-token')) {
         var url = '/github/user/repos';
         var ajaxConfig = {
             type: 'GET',
             dataType: 'json',
-            url:  url
+            url:  url,
+	        data: {page, per_page}
         };
-        return callCWRCGitWithToken(ajaxConfig);
+        return callCWRCGitWithToken(ajaxConfig).then(result=>result);
     } else {
         return $.Deferred().reject("login").promise();
     }
 }
 
+function getRepoContents(githubName) {
+	var url = `/github/repos/${githubName}`;
+	var ajaxConfig = {
+		type: 'GET',
+		dataType: 'json',
+		url:  url
+	};
+	return callCWRCGitWithToken(ajaxConfig).then(result=>{
+		return result
+	}, error=>{
+		console.log('the error in gitserverclient.getRepoContents:');
+		console.log(error)
+		return error
+	});
+}
+
+function getRepoContentsByDrillDown(githubName) {
+	var url = `/github/repos/${githubName}/full`;
+	var ajaxConfig = {
+		type: 'GET',
+		dataType: 'json',
+		url:  url
+	};
+	return callCWRCGitWithToken(ajaxConfig);
+}
+
 // repoName here is the combined owner/repo, e.g., 'jchartrand/someRepoName'
-function getDoc(repoName){
-    var ajaxConfig = {
+
+function getDoc(repoName, branch, path){
+
+    const ajaxConfig = {
         type: 'GET',
         dataType: 'json',
-        url: `/github/repos/${repoName}/doc`
+	    data: {branch, path},
+        url: `/github/repos/${repoName}/contents`
     };
     return callCWRCGitWithToken(ajaxConfig);
 }
@@ -71,25 +93,37 @@ function getInfoForAuthenticatedUser() {
             dataType: 'json',
             url:  url
         };
-        return callCWRCGitWithToken(ajaxConfig);
+        return callCWRCGitWithToken(ajaxConfig).then(result=>result.data);
     } else {
         return $.Deferred().reject("login").promise();
     }
 }
 
-function saveDoc(repo, owner, parentCommitSHA, baseTreeSHA, docText, versionTimestamp) {
-    // I'M ADDING FAKE ANNOTATIONS HERE, BUT I COULD PASS THE REAL ONES, EXTRACTED FROM THE CWRC-WRITER
-   // OR JUST PASS THE WHOLE DOC, WITH ANNOTATIONS IN THE HEADER, TO THE SERVER, AND ONLY THEN EXTRACT THE ANNOTATIONS
-   // FROM THE HEADER.
-    var data = {doc: docText, baseTreeSHA: baseTreeSHA, parentCommitSHA: parentCommitSHA, annotations: 'annotationText', versionTimestamp: versionTimestamp};
+// sha is optional.
+// If provided, the doc will be updated against that SHA.
+// If not, and there is an existing doc, the file will be updated against the latest SHA in the repo.
+function saveDoc(repo, path, content, branch, message, sha) {
+    var data = {content, sha, branch, path, message};
     
     var ajaxConfig = {
         type: 'PUT',
         dataType: 'json',
         data: data,
-        url:  `/github/repos/${owner}/${repo}/doc`
+        url:  `/github/repos/${repo}/doc`
     };
     return callCWRCGitWithToken(ajaxConfig)
+}
+
+function saveAsPullRequest(repo, path, content, branch, message, title, sha) {
+	var data = {sha, branch, path, message, content, title}
+
+	var ajaxConfig = {
+		type: 'PUT',
+		dataType: 'json',
+		data: data,
+		url:  `/github/repos/${repo}/pr`
+	};
+	return callCWRCGitWithToken(ajaxConfig)
 }
 
 function getTemplates() {
@@ -98,7 +132,7 @@ function getTemplates() {
         dataType: 'json',
         url: `/github/templates`
     };
-    return callCWRCGitWithToken(ajaxConfig)
+    return callCWRCGitWithToken(ajaxConfig).then(result=>result.data)
 }
 
 function getTemplate(templateName) {
@@ -110,23 +144,27 @@ function getTemplate(templateName) {
     return callCWRCGitWithToken(ajaxConfig)
 }
 
-function search(query) {
+function search(query, per_page, page) {
     var ajaxConfig = {
         type: 'GET',
         dataType: 'json',
         url: `/github/search`,
-        data: `q=${query}`
+	    data: {q: query, page, per_page}
+
     };
-    return callCWRCGitWithToken(ajaxConfig)
+    return callCWRCGitWithToken(ajaxConfig).then(result=>{
+    	return result
+	})
 }
 
-
-
 module.exports = {
-	createCWRCRepo: createCWRCRepo,
 	getReposForGithubUser: getReposForGithubUser,
     getReposForAuthenticatedGithubUser: getReposForAuthenticatedGithubUser,
     saveDoc: saveDoc,
+    saveAsPullRequest: saveAsPullRequest,
+    createRepo: createRepo,
+    getRepoContents: getRepoContents,
+    getRepoContentsByDrillDown: getRepoContentsByDrillDown,
     getDoc: getDoc,
     getInfoForAuthenticatedUser: getInfoForAuthenticatedUser,
     getTemplates: getTemplates,

@@ -34,6 +34,7 @@
     "cz-conventional-changelog": "1.2.0",
     "ghooks": "2.0.0",
     "istanbul": "0.4.5",
+    "jquery": "^3.2.1",
     "mocha": "3.2.0",
     "nock": "9.0.2",
     "semantic-release": "^6.3.2"
@@ -47,7 +48,6 @@
     }
   },
   "dependencies": {
-    "jquery": "3.2.1",
     "js-cookie": "2.1.3"
   }
 }
