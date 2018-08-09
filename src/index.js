@@ -20,7 +20,7 @@ function createRepo(repo, description, isPrivate) {
   	return callCWRCGitWithToken(ajaxConfig);
 }
 
-function getReposForGithubUser(githubName) {
+function getReposForGithubUser(githubName, page = 1, per_page = 20) {
 	var url = `/github/users/${githubName}/repos`;
 	var ajaxConfig = {
         type: 'GET',
