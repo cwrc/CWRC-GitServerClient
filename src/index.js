@@ -31,14 +31,14 @@ function getReposForGithubUser(githubName, page = 1, per_page = 20) {
     return callCWRCGitWithToken(ajaxConfig);
 }
 
-function getReposForAuthenticatedGithubUser(page, per_page) {
+function getReposForAuthenticatedGithubUser(page, per_page, affiliation) {
     if (Cookies.get('cwrc-token')) {
         var url = '/github/user/repos';
         var ajaxConfig = {
             type: 'GET',
             dataType: 'json',
             url:  url,
-	        data: {page, per_page}
+	        data: {page, per_page, affiliation}
         };
         return callCWRCGitWithToken(ajaxConfig).then(result=>result);
     } else {
