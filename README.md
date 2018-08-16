@@ -33,7 +33,7 @@ To simultaneously register as a dependency in your package.json:
 
 `npm install cwrc-git-server-client --save`   
 
-or in shortcut form:
+or as shortcut:
 
 `npm i -S cwrc-git-server-client`
 
@@ -44,29 +44,43 @@ One example:
 var cwrcGitServerClient = require('cwrc-git-server-client');
 var repos = cwrcGitServerClient.getReposForAuthenticatedGithubUser();
 
-The spec directory contains specifications (tests) that can help better understand the API. Also see [CWRC-GitDelegator](https://github.com/cwrc/CWRC-GitDelegoator) which fully uses the API.
+See [cwrc-git-dialogs](https://github.com/cwrc/cwrc-git-dialogs) which fully uses the API.
 
 ### API
 
 The methods exposed (API) by this package are:
 
 ```
-	createCWRCRepo(repoName, description, isPrivate, theDoc, annotations, versionTimestamp)
+	getReposForGithubUser(githubUserName, page, per_page)
 
-	getReposForGithubUser(githubName)
+    getReposForAuthenticatedGithubUser(page, per_page, affiliation)
 
-    getReposForAuthenticatedGithubUser()
+    saveDoc(repo, path, content, branch, message, sha)
 
-    saveDoc(repo, owner, parentCommitSHA, baseTreeSHA, docText, versionTimestamp)
-
-    getDoc(repoName)
-
+    saveAsPullRequest(repo, path, content, branch, message, title, sha)
+    
+    createRepo(repo, description, isPrivate)
+    
+    getRepoContents(githubRepoName)
+        - where githubRepoName is full name including github user name e.g., jchartrand/myRepo
+        - uses the recursive option of the Github api
+    
+    getRepoContentsByDrillDown(githubRepoName)
+        - where githubRepoName is full name including github user name e.g., jchartrand/myRepo
+        - manually recurses through subdirectories to build full listing
+        
+    getDoc(repoName, branch, path)
+    
     getInfoForAuthenticatedUser()
 
     getTemplates()
+        - retrieves list of templates from CWRC template repository
 
     getTemplate(templatePath)
+        - gets specific CWRC template by name
 
-    search(queryString)
+    search(query, per_page, page)
+        - searches using the github api to search within code
 
 ```
+
