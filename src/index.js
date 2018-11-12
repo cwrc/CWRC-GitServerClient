@@ -1,12 +1,16 @@
 'use strict';
 var $ = require('jquery');
 var Cookies = require('js-cookie');
-  
+
+var baseUrl = '';
+
 function callCWRCGitWithToken(ajaxConfig) {
 	const theJWT = Cookies.get('cwrc-token');
     if (theJWT) {
     	ajaxConfig.headers = {'cwrc-token':theJWT};
     }
+    // ajaxConfig.crossDomain = true;
+    // ajaxConfig.xhrFields = {withCredentials: true};
     return $.ajax(ajaxConfig);
 }
  
@@ -15,13 +19,13 @@ function createRepo(repo, description, isPrivate) {
         type: 'POST',
         dataType: 'json',
         data: {repo, isPrivate, description },
-        url:  '/github/user/repos'
+        url:  `${baseUrl}/github/user/repos`
     };
   	return callCWRCGitWithToken(ajaxConfig);
 }
 
 function getReposForGithubUser(githubName, page = 1, per_page = 20) {
-	var url = `/github/users/${githubName}/repos`;
+	var url = `${baseUrl}/github/users/${githubName}/repos`;
 	var ajaxConfig = {
         type: 'GET',
         dataType: 'json',
@@ -33,7 +37,7 @@ function getReposForGithubUser(githubName, page = 1, per_page = 20) {
 
 function getReposForAuthenticatedGithubUser(page, per_page, affiliation) {
     if (Cookies.get('cwrc-token')) {
-        var url = '/github/user/repos';
+        var url = `${baseUrl}/github/user/repos`;
         var ajaxConfig = {
             type: 'GET',
             dataType: 'json',
@@ -47,7 +51,7 @@ function getReposForAuthenticatedGithubUser(page, per_page, affiliation) {
 }
 
 function getRepoContents(githubName) {
-	var url = `/github/repos/${githubName}`;
+	var url = `${baseUrl}/github/repos/${githubName}`;
 	var ajaxConfig = {
 		type: 'GET',
 		dataType: 'json',
@@ -63,7 +67,7 @@ function getRepoContents(githubName) {
 }
 
 function getRepoContentsByDrillDown(githubName) {
-	var url = `/github/repos/${githubName}/full`;
+	var url = `${baseUrl}/github/repos/${githubName}/full`;
 	var ajaxConfig = {
 		type: 'GET',
 		dataType: 'json',
@@ -80,14 +84,14 @@ function getDoc(repoName, branch, path){
         type: 'GET',
         dataType: 'json',
 	    data: {branch, path},
-        url: `/github/repos/${repoName}/contents`
+        url: `${baseUrl}/github/repos/${repoName}/contents`
     };
     return callCWRCGitWithToken(ajaxConfig);
 }
 
 function getInfoForAuthenticatedUser() {
     if (Cookies.get('cwrc-token')) {
-        var url = '/github/users';
+        var url = `${baseUrl}/github/users`;
         var ajaxConfig = {
             type: 'GET',
             dataType: 'json',
@@ -109,7 +113,7 @@ function saveDoc(repo, path, content, branch, message, sha) {
         type: 'PUT',
         dataType: 'json',
         data: data,
-        url:  `/github/repos/${repo}/doc`
+        url:  `${baseUrl}/github/repos/${repo}/doc`
     };
     return callCWRCGitWithToken(ajaxConfig)
 }
@@ -121,7 +125,7 @@ function saveAsPullRequest(repo, path, content, branch, message, title, sha) {
 		type: 'PUT',
 		dataType: 'json',
 		data: data,
-		url:  `/github/repos/${repo}/pr`
+		url:  `${baseUrl}/github/repos/${repo}/pr`
 	};
 	return callCWRCGitWithToken(ajaxConfig)
 }
@@ -130,7 +134,7 @@ function getTemplates() {
     var ajaxConfig = {
         type: 'GET',
         dataType: 'json',
-        url: `/github/templates`
+        url: `${baseUrl}/github/templates`
     };
     return callCWRCGitWithToken(ajaxConfig).then(result=>result.data)
 }
@@ -139,7 +143,7 @@ function getTemplate(templateName) {
     var ajaxConfig = {
         type: 'GET',
         dataType: 'xml',
-        url: `/github/templates/${templateName}`
+        url: `${baseUrl}/github/templates/${templateName}`
     };
     return callCWRCGitWithToken(ajaxConfig)
 }
@@ -148,7 +152,7 @@ function search(query, per_page, page) {
     var ajaxConfig = {
         type: 'GET',
         dataType: 'json',
-        url: `/github/search`,
+        url: `${baseUrl}/github/search`,
 	    data: {q: query, page, per_page}
 
     };
