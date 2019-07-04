@@ -103,6 +103,15 @@ function getInfoForAuthenticatedUser() {
     }
 }
 
+function getPermissionsForGithubUser(owner, repo, username) {
+    var ajaxConfig = {
+        type: 'GET',
+        dataType: 'json',
+        url: `${baseUrl}/github/repos/${owner}/${repo}/collaborators/${username}/permission`
+    };
+    return callCWRCGitWithToken(ajaxConfig).then(result=>result.data.permission,(fail)=>'none')
+}
+
 // sha is optional.
 // If provided, the doc will be updated against that SHA.
 // If not, and there is an existing doc, the file will be updated against the latest SHA in the repo.
@@ -162,7 +171,8 @@ function search(query, per_page, page) {
 }
 
 module.exports = {
-	getReposForGithubUser: getReposForGithubUser,
+    getReposForGithubUser: getReposForGithubUser,
+    getPermissionsForGithubUser: getPermissionsForGithubUser,
     getReposForAuthenticatedGithubUser: getReposForAuthenticatedGithubUser,
     saveDoc: saveDoc,
     saveAsPullRequest: saveAsPullRequest,
