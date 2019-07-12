@@ -13,7 +13,27 @@ function callCWRCGitWithToken(ajaxConfig) {
     // ajaxConfig.xhrFields = {withCredentials: true};
     return $.ajax(ajaxConfig);
 }
- 
+
+function getDetailsForGithubUser(user) {
+    var url = `${baseUrl}/github/users/${user}`;
+	var ajaxConfig = {
+        type: 'GET',
+        dataType: 'json',
+        url:  url
+    };
+    return callCWRCGitWithToken(ajaxConfig);
+}
+
+function getDetailsForOrg(org) {
+    var url = `${baseUrl}/github/orgs/${org}`;
+	var ajaxConfig = {
+        type: 'GET',
+        dataType: 'json',
+        url:  url
+    };
+    return callCWRCGitWithToken(ajaxConfig);
+}
+
 function createRepo(repo, description, isPrivate) {
 	const ajaxConfig = {
         type: 'POST',
@@ -22,6 +42,16 @@ function createRepo(repo, description, isPrivate) {
         url:  `${baseUrl}/github/user/repos`
     };
   	return callCWRCGitWithToken(ajaxConfig);
+}
+
+function createOrgRepo(org, repo, description, isPrivate) {
+	const ajaxConfig = {
+        type: 'POST',
+        dataType: 'json',
+        data: {repo, isPrivate, description },
+        url:  `${baseUrl}/github/orgs/${org}/repos`
+    };
+    return callCWRCGitWithToken(ajaxConfig);
 }
 
 function getReposForGithubUser(githubName, page = 1, per_page = 20) {
@@ -171,12 +201,15 @@ function search(query, per_page, page) {
 }
 
 module.exports = {
+    getDetailsForGithubUser: getDetailsForGithubUser,
+    getDetailsForOrg: getDetailsForOrg,
     getReposForGithubUser: getReposForGithubUser,
     getPermissionsForGithubUser: getPermissionsForGithubUser,
     getReposForAuthenticatedGithubUser: getReposForAuthenticatedGithubUser,
     saveDoc: saveDoc,
     saveAsPullRequest: saveAsPullRequest,
     createRepo: createRepo,
+    createOrgRepo: createOrgRepo,
     getRepoContents: getRepoContents,
     getRepoContentsByDrillDown: getRepoContentsByDrillDown,
     getDoc: getDoc,
