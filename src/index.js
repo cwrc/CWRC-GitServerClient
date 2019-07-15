@@ -187,11 +187,24 @@ function getTemplate(templateName) {
     return callCWRCGitWithToken(ajaxConfig)
 }
 
-function search(query, per_page, page) {
+function searchCode(query, per_page, page) {
     var ajaxConfig = {
         type: 'GET',
         dataType: 'json',
-        url: `${baseUrl}/github/search`,
+        url: `${baseUrl}/github/search/code`,
+	    data: {q: query, page, per_page}
+
+    };
+    return callCWRCGitWithToken(ajaxConfig).then(result=>{
+        return result
+    })
+}
+
+function searchRepos(query, per_page, page) {
+    var ajaxConfig = {
+        type: 'GET',
+        dataType: 'json',
+        url: `${baseUrl}/github/search/repositories`,
 	    data: {q: query, page, per_page}
 
     };
@@ -216,7 +229,8 @@ module.exports = {
     getInfoForAuthenticatedUser: getInfoForAuthenticatedUser,
     getTemplates: getTemplates,
     getTemplate: getTemplate,
-    search: search
+    searchCode: searchCode,
+    searchRepos: searchRepos
 }
    
 
