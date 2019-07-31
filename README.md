@@ -19,7 +19,9 @@
 
 ### Overview
 
-Makes http calls to the [CWRC-GitServer](https://github.com/cwrc/CWRC-GitServer), invoked from [CWRC-GitDelegator](https://github.com/cwrc/CWRC-GitDelegator) running in [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter). 
+DEPRECATED. Functionality has been merged with [cwrc-git-dialogs](https://github.com/cwrc/cwrc-git-dialogs).
+
+Makes http calls to the [CWRC-GitServer](https://github.com/cwrc/CWRC-GitServer), invoked from [CWRC-GitDelegator](https://github.com/cwrc/CWRC-GitDelegator) running in [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter).
 
 ### Demo 
 
